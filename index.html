@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uma pergunta especial...</title>
+    <style>
+        body {
+            background-color: #fde4f0;
+            background-image: url(https://png.pngtree.com/background/20210715/original/pngtree-pink-heart-background-design-picture-image_1307816.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: scale(0.95);
+            animation: aparecer 3s ease forwards;
+        }
+
+        @keyframes aparecer {
+            0% {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-top: 100px;
+            color: #000;
+        }
+
+        h2 {
+            font-size: 22px;
+            font-style: italic;
+            margin-bottom: 25px;
+            color: #000;
+        }
+
+        button {
+            background-color: #ffb3c1;
+            border: 3px ridge #fff;
+            border-radius: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 10px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+           position: absolute;
+            transform: translate(-50%, 50%);
+        }
+
+        #sim {
+            left: 45%;
+            top: 70%;
+        }
+
+        #nao {
+            left: 55%;
+            top: 70%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .mensagem {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #000;
+            animation: aparecer 2.5s ease forwards;
+        }
+
+    /* ✨ Animação de corações flutuantes */
+    .heart {
+      position: fixed;
+      bottom: 0;
+      width: 20px;
+      height: 20px;
+      background-color: rgba(255, 105, 180, 0.7);
+      transform: rotate(45deg);
+      animation: subir 6s linear infinite;
+      border-radius: 4px;
+      z-index: 0;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: rgba(255, 105, 180, 0.7);
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 10px;
+      top: 0;
+    }
+
+    @keyframes subir {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-800px) rotate(45deg);
+        opacity: 0;
+      }
+    }
+        audio {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Música de fundo -->
+    <audio autoplay loop>
+        <source src="https://cdn.pixabay.com/download/audio/2023/03/07/audio_07c90dc935.mp3?filename=cant-help-falling-in-love-instrumental-cover-13936.mp3" type="audio/mpeg">
+        Seu navegador não suporta áudio.
+    </audio>
+
+
+    <div id="inicio" class="fade-in">
+        <h1>Amor da minha vida ❤️</h1>
+        <h2>Tenho uma perguntinha pra te fazer...</h2>
+    </div>
+
+    <div id="pergunta" class="hidden fade-in">
+        <h1>Quer namorar comigo? 💍</h1>
+        <button id="sim" onclick="aceitou()">Sim 😍</button>
+        <button id="nao" onmouseover="fugir()">Não 😅</button>
+    </div>
+
+    <div class="mensagem hidden" id="mensagemFinal">
+        <p>💖 Eu sabia que você ia dizer sim, minha <strong>Morceguinha</strong>! 💖</p>
+        <p>Agora começa o nosso “felizes para sempre”. 💍✨</p>
+        <p>Com todo o meu amor - seu Morceguinho ❤️</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        // Exibe a pergunta após a animação inicial
+        setTimeout(() => {
+            document.getElementById("inicio").classList.add("hidden");
+            document.getElementById("pergunta").classList.remove("hidden");
+        }, 4000);
+        
+        // Criação de corações flutuantes
+        function criarCoraçao() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+    }
+
+    setInterval(criarCoraçao, 400); // ✨ Cria corações lentamente
+
+        // Botão "não" que foge
+        function fugir() {
+            const botao = document.getElementById("nao");
+            const larguraTela = window.innerWidth - botao.offsetWidth;
+            const alturaTela = window.innerHeight - botao.offsetHeight;
+
+            const novoX = Math.random() * larguraTela;
+            const novoY = Math.random() * alturaTela;
+
+            botao.style.left = `${novoX}px`;
+            botao.style.top = `${novoY}px`;
+        }
+
+        // Quando ela aceitar ❤️
+        function aceitou() {
+            confeteRomantico();
+            document.getElementById("sim").style.display = "none";
+            document.getElementById("nao").style.display = "none";
+            document.getElementById("pergunta").classList.add("hidden");
+            document.getElementById("mensagemFinal").classList.remove("hidden");
+        }
+
+        // Efeito de confete romântico
+        function confeteRomantico() {
+            const duracao = 6 * 1000;
+            const fim = Date.now() + duracao;
+            const padrao = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            const intervalo = setInterval(() => {
+                const tempoRestante = fim - Date.now();
+                if (tempoRestante <= 0) {
+                    clearInterval(intervalo);
+                    return;
+                }
+
+                const quantidade = 200 * (tempoRestante / duracao);
+                confetti({
+                    ...padrao,
+                    particleCount: quantidade,
+                    colors: ['	#f9526b', '#ffc1cc', '#87ceeb', '#ffff33', '#dbfff8'],
+                    origin: { x: Math.random(), y: Math.random() - 0.2 }
+                });
+            }, 250);
+        }
+    </script>
+</body>
+
+</html>
