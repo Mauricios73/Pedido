@@ -2,227 +2,246 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uma pergunta especial...</title>
-    <style>
-        body {
-            background-color: #fde4f0;
-            background-image: url(https://png.pngtree.com/background/20210715/original/pngtree-pink-heart-background-design-picture-image_1307816.jpg);
-            background-repeat: no-repeat;
-            background-size: cover;
-            font-family: 'Montserrat', sans-serif;
-            overflow: hidden;
-            text-align: center;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Uma pergunta especial...</title>
 
-        .fade-in {
-            opacity: 0;
-            transform: scale(0.95);
-            animation: aparecer 3s ease forwards;
-        }
+  <!-- Fontes góticas -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
 
-        @keyframes aparecer {
-            0% {
-                opacity: 0;
-                transform: scale(0.95);
-            }
+  <style>
+    :root {
+      --bg-url: url(https://png.pngtree.com/background/20210715/original/pngtree-pink-heart-background-design-picture-image_1307816.jpg);
+    }
 
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
 
-        h1 {
-            font-size: 40px;
-            margin-top: 100px;
-            color: #000;
-        }
+    body {
+      background-color: #fde4f0;
+      background-image: var(--bg-url);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      /* 👇 Aqui deixamos toda a página gótica */
+      font-family: 'UnifrakturCook', 'Cinzel Decorative', cursive;
+      text-align: center;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #000;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.25);
+    }
 
-        h2 {
-            font-size: 22px;
-            font-style: italic;
-            margin-bottom: 25px;
-            color: #000;
-        }
+    .fade-in {
+      opacity: 0;
+      transform: scale(0.95);
+      animation: aparecer 3s ease forwards;
+    }
 
-        button {
-            background-color: #ffb3c1;
-            border: 3px ridge #fff;
-            border-radius: 10px;
-            font-size: 24px;
-            font-weight: bold;
-            padding: 10px 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-           position: absolute;
-            transform: translate(-50%, 50%);
-        }
+    @keyframes aparecer {
+      0% { opacity: 0; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
 
-        #sim {
-            left: 45%;
-            top: 70%;
-        }
+    h1 {
+      font-size: clamp(26px, 6vw, 42px);
+      margin: 40px 10px 10px;
+    }
 
-        #nao {
-            left: 55%;
-            top: 70%;
-        }
+    h2 {
+      font-size: clamp(18px, 4.5vw, 26px);
+      font-style: italic;
+      margin-bottom: 25px;
+    }
 
-        .hidden {
-            display: none;
-        }
+    .btn-area {
+      position: relative;
+      /* width: min(560px, 90vw); */
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      margin-top: 10px;
+    }
 
-        .mensagem {
-            text-align: center;
-            margin-top: 60px;
-            font-size: 28px;
-            font-weight: bold;
-            color: #000;
-            animation: aparecer 2.5s ease forwards;
-        }
+    button {
+      background-color: #ffb3c1;
+      border: 3px ridge #fff;
+      border-radius: 10px;
+      font-size: clamp(18px, 4vw, 28px);
+      font-weight: 700;
+      padding: 10px 25px;
+      cursor: pointer;
+      transition: transform 0.25s ease, background-color 0.25s ease;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
 
-    /* ✨ Animação de corações flutuantes */
+    button:hover {
+      transform: translateY(-6px) scale(1.05);
+      background-color: #ff98ac;
+    }
+
+    #sim { order: 1; }
+    #nao { order: 2; }
+
+    .hidden { display: none !important; }
+
+    .mensagem {
+      text-align: center;
+      margin: 40px 20px;
+      font-size: clamp(20px, 5vw, 34px);
+      font-weight: 700;
+      animation: aparecer 2.5s ease forwards;
+      line-height: 1.5;
+      padding: 0 10px;
+      word-break: break-word;
+    }
+
+    /* Corações flutuantes */
     .heart {
       position: fixed;
       bottom: 0;
       width: 20px;
       height: 20px;
-      background-color: rgba(255, 105, 180, 0.7);
+      background-color: rgba(255,105,180,0.7);
       transform: rotate(45deg);
       animation: subir 6s linear infinite;
       border-radius: 4px;
       z-index: 0;
+      pointer-events: none;
     }
-
     .heart::before,
     .heart::after {
       content: '';
       position: absolute;
       width: 20px;
       height: 20px;
-      background-color: rgba(255, 105, 180, 0.7);
+      background-color: rgba(255,105,180,0.7);
       border-radius: 50%;
     }
-
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: 10px;
-      top: 0;
-    }
+    .heart::before { top: -10px; left: 0; }
+    .heart::after { left: 10px; top: 0; }
 
     @keyframes subir {
-      0% {
-        transform: translateY(0) rotate(45deg);
-        opacity: 1;
-      }
+      0% { transform: translateY(0) rotate(45deg); opacity: 1; }
+      100% { transform: translateY(-800px) rotate(45deg); opacity: 0; }
+    }
 
-      100% {
-        transform: translateY(-800px) rotate(45deg);
-        opacity: 0;
+    audio { display: none; }
+
+    @media (max-width: 640px) {
+      .btn-area {
+        height: auto;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      button {
+        padding: 10px 18px;
       }
     }
-        audio {
-            display: none;
-        }
-    </style>
+
+    @media (max-width: 420px) {
+      h1 { margin-top: 24px; }
+      .btn-area { gap: 12px; }
+    }
+  </style>
 </head>
 
 <body>
-    <!-- Música de fundo -->
-    <audio autoplay loop>
-        <source src="https://cdn.pixabay.com/download/audio/2023/03/07/audio_07c90dc935.mp3?filename=cant-help-falling-in-love-instrumental-cover-13936.mp3" type="audio/mpeg">
-        Seu navegador não suporta áudio.
-    </audio>
+  <!-- Música de fundo -->
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2023/03/07/audio_07c90dc935.mp3?filename=cant-help-falling-in-love-instrumental-cover-13936.mp3" type="audio/mpeg">
+    Seu navegador não suporta áudio.
+  </audio>
 
+  <div id="inicio" class="fade-in">
+    <h1>Amor da minha vida ❤️</h1>
+    <h2>Tenho uma perguntinha pra te fazer...</h2>
+  </div>
 
-    <div id="inicio" class="fade-in">
-        <h1>Amor da minha vida ❤️</h1>
-        <h2>Tenho uma perguntinha pra te fazer...</h2>
+  <div id="pergunta" class="hidden fade-in" style="width:100%;max-width:840px;">
+    <h1>Quer namorar comigo? 💍</h1>
+
+    <div class="btn-area">
+      <button id="sim" onclick="aceitou()">Sim 😍</button>
+      <button id="nao" onmouseover="fugir()">Não 😅</button>
     </div>
+  </div>
 
-    <div id="pergunta" class="hidden fade-in">
-        <h1>Quer namorar comigo? 💍</h1>
-        <button id="sim" onclick="aceitou()">Sim 😍</button>
-        <button id="nao" onmouseover="fugir()">Não 😅</button>
-    </div>
+  <div class="mensagem hidden" id="mensagemFinal">
+    <p>💖 Eu sabia que você ia dizer sim, minha <strong>Morceguinha</strong>! 💖</p>
+    <p>Agora começa o nosso “felizes para sempre”. 💍✨</p>
+    <p>Com todo o meu amor — seu Morceguinho 🖤</p>
+  </div>
 
-    <div class="mensagem hidden" id="mensagemFinal">
-        <p>💖 Eu sabia que você ia dizer sim, minha <strong>Morceguinha</strong>! 💖</p>
-        <p>Agora começa o nosso “felizes para sempre”. 💍✨</p>
-        <p>Com todo o meu amor - seu Morceguinho ❤️</p>
-    </div>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script>
+    // Mostra pergunta após introdução
+    setTimeout(() => {
+      document.getElementById("inicio").classList.add("hidden");
+      document.getElementById("pergunta").classList.remove("hidden");
+    }, 4000);
 
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script>
-        // Exibe a pergunta após a animação inicial
-        setTimeout(() => {
-            document.getElementById("inicio").classList.add("hidden");
-            document.getElementById("pergunta").classList.remove("hidden");
-        }, 4000);
-        
-        // Criação de corações flutuantes
-        function criarCoraçao() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 6000);
+    // Corações flutuantes
+    function criarCoracao() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 7000);
+    }
+    setInterval(criarCoracao, 400);
+
+    // Botão "não" foge
+    function fugir() {
+      const botao = document.getElementById('nao');
+      const largura = window.innerWidth - botao.offsetWidth - 16;
+      const altura = window.innerHeight - botao.offsetHeight - 16;
+      const x = Math.random() * largura;
+      const y = Math.random() * altura;
+      botao.style.position = 'absolute';
+      botao.style.left = x + 'px';
+      botao.style.top = y + 'px';
     }
 
-    setInterval(criarCoraçao, 400); // ✨ Cria corações lentamente
+    // Quando aceitar
+    function aceitou() {
+      confeteRomantico();
+      document.getElementById('sim').style.display = 'none';
+      document.getElementById('nao').style.display = 'none';
+      document.getElementById('pergunta').classList.add('hidden');
+      document.getElementById('mensagemFinal').classList.remove('hidden');
+    }
 
-        // Botão "não" que foge
-        function fugir() {
-            const botao = document.getElementById("nao");
-            const larguraTela = window.innerWidth - botao.offsetWidth;
-            const alturaTela = window.innerHeight - botao.offsetHeight;
-
-            const novoX = Math.random() * larguraTela;
-            const novoY = Math.random() * alturaTela;
-
-            botao.style.left = `${novoX}px`;
-            botao.style.top = `${novoY}px`;
+    // Confete
+    function confeteRomantico() {
+      const dur = 6 * 1000;
+      const end = Date.now() + dur;
+      const base = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+      const interval = setInterval(() => {
+        const remain = end - Date.now();
+        if (remain <= 0) {
+          clearInterval(interval);
+          return;
         }
-
-        // Quando ela aceitar ❤️
-        function aceitou() {
-            confeteRomantico();
-            document.getElementById("sim").style.display = "none";
-            document.getElementById("nao").style.display = "none";
-            document.getElementById("pergunta").classList.add("hidden");
-            document.getElementById("mensagemFinal").classList.remove("hidden");
-        }
-
-        // Efeito de confete romântico
-        function confeteRomantico() {
-            const duracao = 6 * 1000;
-            const fim = Date.now() + duracao;
-            const padrao = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-            const intervalo = setInterval(() => {
-                const tempoRestante = fim - Date.now();
-                if (tempoRestante <= 0) {
-                    clearInterval(intervalo);
-                    return;
-                }
-
-                const quantidade = 200 * (tempoRestante / duracao);
-                confetti({
-                    ...padrao,
-                    particleCount: quantidade,
-                    colors: ['	#f9526b', '#ffc1cc', '#87ceeb', '#ffff33', '#dbfff8'],
-                    origin: { x: Math.random(), y: Math.random() - 0.2 }
-                });
-            }, 250);
-        }
-    </script>
+        const count = Math.round(200 * (remain / dur));
+        confetti({
+          ...base,
+          particleCount: count,
+          colors: ['#f9526b', '#ffc1cc', '#87ceeb', '#ffff33', '#dbfff8'],
+          origin: { x: Math.random(), y: Math.random() - 0.2 }
+        });
+      }, 250);
+    }
+  </script>
 </body>
-
 </html>
